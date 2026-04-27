@@ -24,6 +24,8 @@ spec:
       labels:
         app: galaga-mysql
     spec:
+      nodeSelector:
+        tier: db
       containers:
         - name: mysql
           image: mysql:8.0

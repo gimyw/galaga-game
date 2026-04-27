@@ -13,6 +13,8 @@ spec:
       labels:
         app: galaga-frontend
     spec:
+      nodeSelector:
+        tier: web
       containers:
         - name: frontend
           image: galaga-frontend:latest

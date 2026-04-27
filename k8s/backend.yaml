@@ -13,6 +13,8 @@ spec:
       labels:
         app: galaga-backend
     spec:
+      nodeSelector:
+        tier: app
       containers:
         - name: backend
           image: galaga-backend:latest
