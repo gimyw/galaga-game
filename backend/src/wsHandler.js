@@ -25,6 +25,11 @@ function setupWebSocket(wss) {
 
         case 'GAME_OVER':
           client.score = parseInt(msg.score) || 0;
+          // 점수 범위 검증
+          if (client.score < 0 || client.score > 9999999) {
+            console.warn(`Invalid score from ${client.name}: ${client.score}`);
+            break;
+          }
           client.name = (msg.name || client.name).slice(0, 32);
           try {
             await pool.execute(
