@@ -15,8 +15,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: galaga.example.com
-      http:
+    - http:
         paths:
           - path: /
             pathType: Prefix

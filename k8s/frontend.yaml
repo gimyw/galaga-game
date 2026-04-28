@@ -13,12 +13,12 @@ spec:
       labels:
         app: galaga-frontend
     spec:
-      nodeSelector:
-        tier: web
+      imagePullSecrets:
+        - name: ecr-secret
       containers:
         - name: frontend
-          image: galaga-frontend:latest
-          imagePullPolicy: IfNotPresent
+          image: 851957594139.dkr.ecr.ap-northeast-2.amazonaws.com/toy/k8s/front:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
           readinessProbe:
