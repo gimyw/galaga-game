@@ -49,6 +49,8 @@ spec:
                 secretKeyRef:
                   name: galaga-db-secret
                   key: DB_NAME
+            - name: ALLOWED_ORIGINS
+              value: "http://toy-alb-505402289.ap-northeast-2.elb.amazonaws.com"
           readinessProbe:
             httpGet:
               path: /health
@@ -68,8 +70,10 @@ metadata:
   name: galaga-backend
   namespace: galaga
 spec:
+  type: NodePort
   selector:
     app: galaga-backend
   ports:
     - port: 4000
       targetPort: 4000
+      nodePort: 30400
