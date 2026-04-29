@@ -1,9 +1,17 @@
 const { pool } = require('./db');
 
 const clients = new Map(); // ws -> { name, score }
+const MAX_CLIENTS = 100; // 최대 동시 접속 수 제한
 
 function setupWebSocket(wss) {
   wss.on('connection', (ws) => {
+    // 최대 접속 수 초과 시 연결 거부
+    if (clients.size >= MAX_CLIENTS) {
+      console.warn('Max clients reached, rejecting connection');
+      ws.close(1013, 'Server full');
+      return;
+    }
+
     console.log('Client connected');
     clients.set(ws, { name: 'Unknown', score: 0 });
 
@@ -21,6 +29,10 @@ function setupWebSocket(wss) {
 
         case 'SCORE_UPDATE':
           client.score = parseInt(msg.score) || 0;
+          // 점수 범위 검증
+          if (client.score < 0 || client.score > 9999999) {
+            client.score = 0;
+          }
           break;
 
         case 'GAME_OVER':
